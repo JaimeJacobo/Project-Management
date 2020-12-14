@@ -14,7 +14,7 @@ class ProjectDetails extends Component {
 	getSingleProject = () => {
 		const { params } = this.props.match;
 		axios
-			.get(`https://project-management-back.herokuapp.com/api/projects/${params.id}`)
+			.get(`http://localhost:5000/api/projects/${params.id}`, { withCredentials: true })
 			.then((responseFromApi) => {
 				const theProject = responseFromApi.data;
 				this.setState(theProject);
@@ -39,7 +39,7 @@ class ProjectDetails extends Component {
 	deleteProject = () => {
 		const { params } = this.props.match;
 		axios
-			.delete(`https://project-management-back.herokuapp.com/api/projects/${params.id}`)
+			.delete(`http://localhost:5000/api/projects/${params.id}`, { withCredentials: true })
 			.then(() => {
 				this.props.history.push('/projects'); // !!!
 			})
@@ -54,6 +54,17 @@ class ProjectDetails extends Component {
 		} else {
 			// pass the project and method getSingleProject() as a props down to AddTask component
 			return <AddTask theProject={this.state} getTheProject={this.getSingleProject} />;
+		}
+	};
+
+	ownershipCheck = (project) => {
+		if (this.props.loggedInUser && project.owner == this.props.loggedInUser._id) {
+			return (
+				<div>
+					<div>{this.renderEditForm()} </div>
+					<button onClick={() => this.deleteProject(this.state._id)}>Delete project</button>
+				</div>
+			);
 		}
 	};
 
@@ -74,8 +85,7 @@ class ProjectDetails extends Component {
 							</div>
 						);
 					})}
-				<div>{this.renderEditForm()} </div>
-				<button onClick={() => this.deleteProject()}>Delete project</button> {/* <== !!! */}
+				{this.ownershipCheck(this.state)}
 				<br />
 				<div>{this.renderAddTaskForm()} </div>
 				<br />
