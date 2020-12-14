@@ -15,7 +15,7 @@ class EditProject extends Component {
 
 		axios
 			.put(
-				`http://localhost:5000/api/projects/${this.props.theProject._id}`,
+				`https://project-management-back.herokuapp.com/api/projects/${this.props.theProject._id}`,
 				{ title, description },
 				{ withCredentials: true }
 			)

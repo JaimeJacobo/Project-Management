@@ -8,7 +8,7 @@ class ProjectList extends Component {
 	state = { listOfProjects: [] };
 
 	getAllProjects = () => {
-		axios.get(`http://localhost:5000/api/projects`, { withCredentials: true }).then((responseFromApi) => {
+		axios.get(`https://project-management-back.herokuapp.com/api/projects`, { withCredentials: true }).then((responseFromApi) => {
 			this.setState({
 				listOfProjects: responseFromApi.data
 			});

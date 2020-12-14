@@ -5,12 +5,13 @@ import axios from 'axios';
 class AuthService {
 	constructor() {
 		let service = axios.create({
-			baseURL: 'http://localhost:5000/api',
+			baseURL: 'https://project-management-back.herokuapp.com/api',
 			withCredentials: true
 		});
 		this.service = service;
 	}
 	signup = (username, password) => {
+		console.log('entra aqui')
 		return this.service.post('/signup', { username, password }).then((response) => response.data);
 	};
 	loggedin = () => {
